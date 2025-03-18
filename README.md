@@ -1,15 +1,15 @@
 ## Data-Engineering-With-AWS
 
 ## Projects
-Data Modelling
-### Data modeling with Apache Cassandra
+### Data Modelling
+Data modeling with Apache Cassandra
 
 In this project,
 
 Apply concepts learned on data modeling with Apache Cassandra and complete an ETL pipeline using Python.
 Model the data by creating tables in Apache Cassandra to run queries.
 
-###Cloud Data Warehouses
+### Cloud Data Warehouses
 Data warehousing with AWS Redshift
 
 In this project,
