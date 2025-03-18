@@ -1,10 +1,6 @@
-# Project: STEDI Human Balance Analytics
+# Project: STEDI Human Balance Analytics 
 
-## Introduction
-
-Spark and AWS Glue allow you to process data from multiple sources, categorize the data, and curate it to be queried in the future for multiple purposes. As a data engineer on the STEDI Step Trainer team, we'll need to extract the data produced by the STEDI Step Trainer sensors and the mobile app, and curate them into a data lakehouse solution on AWS so that Data Scientists can train the learning model. 
-
-## Project Details
+## Problem Statement
 
 The STEDI Team has been hard at work developing a hardware STEDI Step Trainer that:
 
@@ -20,12 +16,53 @@ The STEDI team wants to use the motion sensor data to train a machine learning m
 
 Some of the early adopters have agreed to share their data for research purposes. Only these customers’ Step Trainer and accelerometer data should be used in the training data for the machine learning model.
 
+## Project Discription
+
+In this project I extracted data produced by the STEDI Step Trainer sensors and the mobile app, and curated them into a data lakehouse solution on AWS. The intent is for Data Scientists to use the solution to train machine learning models.
+
+The Data lake solution is developed using AWS Glue, AWS S3, Python, and Spark for sensor data that trains machine learning algorithms.
+
+AWS infrastructure is used to create storage zones (landing, trusted and curated), data catalog, data transformations between zones and queries in semi-structured data.
+
+## Project Datasets
+
+Customer Records: from fulfillment and the STEDI website.
+Step Trainer Records: data from the motion sensor.
+Accelerometer Records: data from the mobile app.
+
 ## Implementation
+
 **GlueJOB**
 glue job script is in scripts folder with specified name
-**Athena**:
-Trusted Zone Query results:
+
+Landing Zone
+In the Landing Zone I stored the customer, accelerometer and step trainer raw data in AWS S3 bucket.
+
+Using The AWS glue data catalog, I created a glue tables so that I can query the data using AWS athena.
+
+Trusted Zone
+In the Trusted Zone, I created AWS Glue jobs to make transofrmations on the raw data in the landing zones.
+
+Glue job scripts
+
+1. customer_landing_to_trusted.py - This script transfers customer data from the 'landing' to 'trusted' zones. It filters for customers who have agreed to share data with researchers.
+
+2. accelerometer_landing_to_trusted_zone.py - This script transfers accelerometer data from the 'landing' to 'trusted' zones. Using a join on customer_trusted and accelerometer_landing, It filters for Accelerometer readings from customers who have agreed to share data with researchers.
+
+3. Trainer_landing_to_trusted.py - This script transfers Step Trainer data from the 'landing' to 'trusted' zones. Using a join on customer_curated and step_trainer_landing, It filters for customers who have accelerometer data and have agreed to share their data for research with Step Trainer readings.
+
+Curated Zone
+In the Curated Zone I created AWS Glue jobs to make further transformations, to meet the specific needs of a particular analysis.
+
+Glue job scripts
+
+customer_trusted_to_curated.py - This script transfers customer data from the 'trusted' to 'curated' zones. Using a join on customer_trusted and accelerometer_landing, It filters for customers with Accelerometer readings and have agreed to share data with researchers.
+
+Trainer_trusted_to_curated.py: This script is used to build aggregated table that has each of the Step Trainer Readings, and the associated accelerometer reading data for the same timestamp, but only for customers who have agreed to share their data.
+
+
 
 all query result are in screenshot folder with name specified.
+
 
 
