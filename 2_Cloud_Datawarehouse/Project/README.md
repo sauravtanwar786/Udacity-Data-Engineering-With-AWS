@@ -1,19 +1,21 @@
 ## Project: Data Warehouse
 
 ## Project Discription
+
 In this project I built an ETL pipeline that extracts data from Amazon's S3, staged them in Redshift, and transformed data into a set of dimensional tables for analytics team to continue finding insights into what songs users are listening to.
 
 ## Project Datasets
+
 Song data: 's3://udacity-dend/song_data'
 Log data: 's3://udacity-dend/log_data'
 
 ### ETL Process
+
 Each Dataset was copied into a table created in the Redshift Cluster, and then these tables were used to insert values into the Star schema, so that the data can be ready for analysis later.
 
-### 
-Database
-The database design schema consists of the following tables:
+### Database
 
+The database design schema consists of the following tables:
 1.Staging_events Table
 2.Staging_songs Table
 3.Songplay Table
